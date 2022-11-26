@@ -1,0 +1,28 @@
+{% load static %}
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The HTML5 Herald</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body style="background-color: #272953">
+    <div id="dashboard-header">
+        <h1>Witaj, {{ user_name }}! Twoja rola w systemie to {{ user.get_user_role_display }}.</h1>
+        <a class="reg-log-button" href="http://127.0.0.1:8000/logout/"><button>Wyloguj się</button></a>
+    </div>
+    <div id="main-container">
+      {% block content %}
+
+      {% endblock %}
+    </div>
+
+  <script src="js/scripts.js"></script>
+</body>
+</html>

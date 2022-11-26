@@ -1,0 +1,647 @@
+body{
+    margin: 0;
+    padding: 0;
+    color: white;
+    background-color: #272953;
+}
+
+#main-container{
+    width: 100vw;
+    height: 86.05vh;
+    color: white;
+    background-color: #272953;
+}
+
+.menu-button > button{
+    width: 150px;
+    font-weight: bold;
+    font-size: 20px;
+    border: none;
+    background-color: #00887A;
+    margin-top: 0;
+    color: white;
+}
+
+.menu-button > button:hover{
+    transition: 0.4s;
+    box-shadow: 0px 2px white;
+}
+
+#reg-log{
+    margin-left: 25%;
+    margin-top: 20vh;
+}
+
+#reg-log > .reg-log-button > button{
+    width:300px;
+    height: 80px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#reg-log > .reg-log-button:nth-child(4){
+    margin-left: -80px;
+}
+
+
+#reg-log > .reg-log-button:nth-child(5){
+    margin-left: 40px;
+}
+
+
+#login-question{
+    float: left;
+    font-size: 25px;
+    margin-left: -10px;
+
+}
+
+#register-question{
+    float: left;
+    font-size: 25px;
+    margin-left: 110px;
+}
+
+.reg-log-button > button{
+    border: 2px solid black;
+    background-color: #FFFFFF;
+    box-shadow: 4px 4px black;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 4px;
+}
+
+.reg-log-button > button:hover{
+    transition: 0.4s;
+    box-shadow: 0px 0px black;
+}
+
+#reg-log > a:nth-child(2){
+    margin-left: 50px;
+}
+
+#menu{
+    padding-left: 21.5vw;
+    padding-top: 4vh;
+    padding-bottom: 4vh;
+    background-color: #00887A;
+    border-bottom: 2px solid #005546;
+}
+
+#menu > a{
+    margin-left: 5vw;
+}
+
+#left{
+    width:  50%;
+    height: 88.8vh;
+    float: left;
+    background-color: white;
+}
+
+#right{
+    width:  50%;
+    height: 88.8vh;
+    float: left;
+    background-color: #272953;
+}
+
+.container{
+    display: flex;
+    margin-top: 200px;
+    justify-content: center;
+}
+
+.row-login {
+    width:400px;
+    height: 400px;
+    padding-top: 80px;
+    background-color: #00887A;
+    border: 2px solid #16113A;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.row-register {
+    width:400px;
+    height: 700px;
+    padding-top: 20px;
+    margin-top: -100px;
+    background-color: #00887A;
+    border: 2px solid #16113A;
+    border-radius: 10px;
+    text-align: center;
+}
+
+#left > p{
+    color: black;
+    font-size: 38px;
+    font-weight: bold;
+    margin-left: 20px;
+    margin-top: 200px;
+}
+
+.box > p > input{
+    width:200px;
+    height: 40px;
+    padding-left: 10px;
+    margin-top: 10px;
+}
+
+.box > p > input::placeholder{
+    width:200px;
+    height: 40px;
+    color: #828282;
+}
+
+.login-error{
+    font-size: 30px;
+    color: red;
+}
+
+#dashboard-header{
+    padding-left: 21.5vw;
+    padding-top: 4vh;
+    padding-bottom: 4vh;
+    background-color: #00887A;
+    border-bottom: 2px solid #005546;
+    color: white;
+}
+
+#header{
+    padding-left: 80vw;
+    padding-top: 4vh;
+    padding-bottom: 4vh;
+    background-color: #00887A;
+    border-bottom: 2px solid #005546;
+    color: white;
+}
+
+#dashboard-header > h1{
+    float: left;
+}
+
+#dashboard-header > .reg-log-button{
+    margin-left: 300px;
+}
+
+/*                            Dashboard restaurants                                     */
+
+#dashboard-restaurants-container{
+    float: left;
+    background-color: #272953;
+    padding-bottom: 20px;
+    border-top: 4px solid #16113A;
+    border-bottom: 4px solid #16113A;
+    border-right: 4px solid #16113A;
+}
+
+#dashboard-restaurants{
+    overflow-x:auto;
+    padding-top: 44px;
+    padding-bottom: 20px;
+    background-color: #272953;
+    width:25vw;
+    height: 74vh;
+    color: white;
+    text-align: center;
+}
+
+#dashboard-restaurants-container > a > button{
+    margin-top: 20px;
+    margin-left: 17vh;
+}
+
+td, th {
+  border-bottom: 2px solid white;
+  padding: 0.5rem;
+}
+
+.table-restaurants{
+    table-layout: auto;
+    margin-top: 32px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+
+/*                            Dashboard awaiting                                     */
+
+#dashboard-awaiting-orders-container{
+    float: left;
+    background-color: #272953;
+    padding-bottom: 20px;
+    border: 4px solid #16113A;
+}
+
+#dashboard-awaiting-orders{
+    overflow-x:auto;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #272953;
+    width:42vw;
+    height: 85vh;
+    color: white;
+    text-align: center;
+}
+
+#dashboard-awaiting-orders-container > a > button{
+    margin-top: 10px;
+    margin-left: 20vh;
+}
+
+td, th {
+  border-bottom: 2px solid #16113A;
+  padding: 0.5rem;
+}
+
+.table-awaiting-orders{
+    table-layout: auto;
+    margin-top: 40px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+/*                            Dashboard orders                                     */
+
+#dashboard-orders-container{
+    float: left;
+    background-color: #272953;
+    padding-bottom: 20px;
+    border: 4px solid #16113A;
+}
+
+#dashboard-orders{
+    overflow-x:auto;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #272953;
+    width:31.9vw;
+    height: 85vh;
+    color: white;
+    text-align: center;
+}
+
+#dashboard-orders-container > a > button{
+    margin-top: 10px;
+    margin-left: 20vh;
+}
+
+td, th {
+  border-bottom: 1px solid white;
+  padding: 0.5rem;
+}
+
+.table-orders{
+    table-layout: auto;
+    margin-top: 40px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+/*  Customer site  */
+
+#customer > a.reg-log-button > button{
+    margin-top: 20px;
+    margin-bottom: 40px;
+    margin-left: 50px;
+}
+
+#customer > p {
+    float: left;
+    margin-top: 10px;
+    margin-left: 100px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 24px;
+    text-align: center;
+}
+
+#customer{
+    border-bottom: 2px solid white;
+}
+
+#customer-orders-container {
+    background-color: #272953;
+    padding-bottom: 20px;
+    width: 100vw;
+}
+
+#customer-orders{
+    float: left;
+    overflow-x:auto;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #272953;
+    width:50vw;
+    height: 73vh;
+    color: white;
+    text-align: center;
+    border: 4px solid #16113A;
+}
+
+#close-orders{
+    float: left;
+    overflow-x:auto;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #272953;
+    width:50vw;
+    height: 73vh;
+    color: white;
+    text-align: center;
+    border: 4px solid #16113A;
+}
+
+/*  Supplier  */
+/*  Supplier rating  */
+
+#supplier-rating-container{
+    float: left;
+    background-color: #272953;
+    padding-bottom: 20px;
+    border: 4px solid #16113A;
+}
+
+#supplier-rating{
+    overflow-x:auto;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #272953;
+    width:20vw;
+    height: 82vh;
+    color: white;
+    text-align: center;
+}
+
+/*  Supplier awaiting  */
+
+#supplier-awaiting-container{
+    float: left;
+    background-color: #272953;
+    padding-bottom: 20px;
+    border: 4px solid #16113A;
+}
+
+#supplier-awaiting{
+    overflow-x:auto;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #272953;
+    width:39vw;
+    height: 82vh;
+    color: white;
+    text-align: center;
+}
+
+/*  Supplier orders  */
+
+#supplier-orders-container{
+    float: left;
+    background-color: #272953;
+    padding-bottom: 20px;
+    border: 4px solid #16113A;
+}
+
+#supplier-orders{
+    overflow-x:auto;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #272953;
+    width:39.75vw;
+    height: 82vh;
+    color: white;
+    text-align: center;
+}
+
+#add-restaurant-container{
+    width:400px;
+    height: 550px;
+    margin-top: 80px;
+    padding-top: 20px;
+    margin-left: 40vw;
+    border-radius: 10px;
+    text-align: center;
+    border: 2px solid #16113A;
+    background-color: #00887A;
+}
+
+#add-restaurant-form > form > p > input{
+    width:200px;
+    height: 40px;
+    padding-left: 10px;
+    margin-top: 10px;
+}
+
+/*  Display restaurants  */
+.table-restaurants > tbody > tr > td{
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+#restaurants-list-container{
+    float: left;
+    background-color: #272953;
+    padding-bottom: 20px;
+    border: 4px solid #16113A;
+}
+
+#restaurants-list{
+    overflow-x:auto;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #272953;
+    width:99.58vw;
+    height: 82.7vh;
+    color: white;
+    text-align: center;
+}
+
+#restaurants-details-container{
+    float: left;
+    background-color: #272953;
+    padding-bottom: 20px;
+    border: 4px solid #16113A;
+}
+
+#restaurants-details{
+    overflow-x:auto;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #272953;
+    width:25vw;
+    height: 80vh;
+    color: white;
+    text-align: center;
+}
+
+#restaurant-dishes-container{
+    float: left;
+    background-color: #272953;
+    padding-bottom: 20px;
+    border: 4px solid #16113A;
+}
+
+#restaurant-dishes{
+    float: left;
+    overflow-x:auto;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #272953;
+    width:74.15vw;
+    height: 82vh;
+    color: white;
+    text-align: center;
+}
+
+#dishes-table{
+    table-layout: auto;
+    margin-top: 40px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+/*  Summary consumer  */
+
+#customer-summary{
+    padding-top: 40px;
+    background-color: #272953;
+    width:100vw;
+    height: 200px;
+    color: white;
+    text-align: center;
+    border-bottom: 8px solid #16113A;
+}
+
+.table-summary{
+    table-layout: auto;
+    width: 100%;
+    height: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    background-color: #272953;
+    color: white;
+}
+
+/* Chat Container Style */
+
+#main-container {
+    display: flex;
+}
+
+#order-container {
+    display: inline-block;
+    width: 50%;
+}
+
+#chat-container {
+    display: inline-block;
+    width: 50%;
+}
+
+#back-button{
+    margin-right: 40px;
+}
+
+/* order_details_customer */
+#main-content{
+    background-color: #272953;
+    color: white;
+    height: 86.1vh;
+}
+
+#main-content > .details{
+    padding-bottom: 17px;
+}
+
+#main-content > h2{
+    padding-top: 10px;
+    text-align: center;
+}
+
+#awaiting-orders-container{
+    width: 25vw;
+    float: left;
+    background-color: #272953;
+    padding-bottom: 20px;
+    border: 4px solid #16113A;
+    height: 75%;
+    overflow-x: auto;
+}
+
+#chat-container{
+    float: left;
+    width: 49.2vw;
+    padding-bottom: 20px;
+    border: 4px solid #16113A;
+    height: 75%;
+}
+
+#chat-container > #chat-output{
+    background-color: #FFFFFF;
+    width: 100%;
+    height: 97%;
+}
+
+#chat-input{
+    float: left;
+    width:90%;
+}
+
+#chat-submit{
+    float: left;
+    width: 10%;
+    margin-top: -25px;
+}
+
+#chat-output{
+    color: #272953;
+    overflow-x: auto;
+    padding-top: 15px;
+    padding-left: 15px;
+}
+
+#order-details{
+    padding-top: 20px;
+    float: left;
+    width: 25%;
+    text-align: center;
+    border-top: 4px solid #16113A;
+    border-bottom: 4px solid #16113A;
+    height: 75%;
+}
+
+/* Add dish */
+#add-dish-container{
+    width:400px;
+    height: 550px;
+    margin-top: 80px;
+    padding-top: 20px;
+    margin-left: 40vw;
+    border-radius: 10px;
+    text-align: center;
+    border: 2px solid #16113A;
+    background-color: #00887A;
+}
+
+#add-dish-form > form > p > input{
+    width:200px;
+    height: 40px;
+    padding-left: 10px;
+    margin-top: 10px;
+}
+
+a > button{
+    cursor: pointer;
+}

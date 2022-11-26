@@ -1,0 +1,47 @@
+{% load static %}
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The HTML5 Herald</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+  {% block content %}
+    <div id="dashboard-header">
+      <h1>Witaj, {{ user_name }}! Twoja rola w systemie to {{ user.get_user_role_display }}.</h1>
+      <a class="reg-log-button" href="http://127.0.0.1:8000/logout"><button>Wyloguj się</button></a>
+    </div>
+    <div id="restaurants-list-container">
+      <div id="restaurants-list">
+        <h3>Dostępne restauracje</h3>
+        <h6>Kliknij na nazwę aby zobaczyć menu</h6>
+        <table class="table-restaurants">
+          <tr>
+            <th>Nazwa</th>
+            <th>Rodzaj kuchni</th>
+            <th>Adres</th>
+          </tr>
+          {% for restaurant in restaurants %}
+          <tr>
+            <td><a href="./{{ restaurant.slug }}">{{ restaurant.name }}</a></td>
+            <td>{{ restaurant.get_category_display }}</td>
+            <td>{{ restaurant.address_street }}, {{ restaurant.address_city }}, {{ restaurant.address_postalcode}},</td>
+          </tr>
+  
+        {% endfor %}
+        </table>
+      </div>
+    </div>
+
+    {% endblock %}
+
+  <script src="js/scripts.js"></script>
+</body>
+</html>

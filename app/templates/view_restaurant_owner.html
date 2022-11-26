@@ -1,0 +1,61 @@
+{% extends 'dashboard.html' %}
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The HTML5 Herald</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+  {% load static %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script rel="text/javascript" src="{% static 'js/app.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+  {% block content %}
+    <div id="main-container">
+      <div id="restaurants-details-container">
+          <div id="restaurants-details">
+          <h1><h1>Restauracja {{ restaurant.name }}</h1></h1>
+        <p>Rodzaj kuchni: {{ restaurant.get_category_display }}</p>
+        <p>Adres: {{ restaurant.address_street }}, {{ restaurant.address_city }}, {{ restaurant.address_postalcode }}</p>
+        <p>Opis: {{ restaurant.description }}</p>
+              <br>
+              <a class="reg-log-button" id="back-button" href="/dashboard/"><button>Powrót</button></a>
+              <a class="reg-log-button" href="./add-dish/"><button>Dodaj danie</button></a>
+      </div>
+      </div>
+    <div id="restaurant-dishes-container">
+      <div id="restaurant-dishes">
+          <h3>Dania serwowane w restauracji</h3>
+          <table id="dishes-table">
+            <tr>
+              <th>Nazwa dania</th>
+              <th>Opis potrawy</th>
+              <th>Składniki</th>
+              <th>Alergeny</th>
+              <th>Cena</th>
+            </tr>
+            {% for dish in dishes %}
+            <tr>
+              <td>{{ dish.name }}</td>
+              <td>{{ dish.description}}</td>
+              <td>{{ dish.ingredients }}</td>
+              <td>{{ dish.alergens}}</td>
+              <td id="price-btn-add-{{ forloop.counter0 }}">{{ dish.price}}</td>
+            </tr>
+            {% endfor %}
+          </table>
+      </div>
+    </div>
+    </div>
+
+    {% endblock %}
+
+  <script src="js/scripts.js"></script>
+</body>
+</html>

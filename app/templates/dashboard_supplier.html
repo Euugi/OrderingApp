@@ -1,0 +1,74 @@
+{% extends 'dashboard.html' %}
+
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The HTML5 Herald</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+  <link rel="stylesheet" href="css/styles.css?v=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+  {% block content %}
+      <div id="supplier-rating-container">
+    <div id="supplier-rating">
+      <h3>Opinie klientów</h3>
+      <p>Twoja średnia ocena: </p>
+    </div>
+      </div>
+      <div id="supplier-awaiting-container">
+    <div id="supplier-awaiting">
+      <h3>Oczekujące dostawy</h3>
+      <h6>Określ czy jesteś w stanie zrealizować dane zamówienie</h6>
+      <table class="table-awaiting-orders">
+          <tr>
+              <th>ID</th>
+              <th>Twój status</th>
+              <th>Status restauracji</th>
+              <th>Adres dostawy</th>
+              <th>Data zamówienia</th>
+          </tr>
+          {% for order in available_orders %}
+          <tr>
+              <td><a href="./order/{{ order.id }}">{{ order.id }}</a></td>
+              <td>{{ order.get_supplier_acceptance_display}}</td>
+              <td>{{ order.get_restaurant_acceptance_display}}</td>
+              <td>{{ order.delivery_address }}</td>
+              <td>{{ order.created_on|date:'d-m-Y H:i:s' }}</td>
+          </tr>
+          {% endfor %}
+      </table>
+    </div>
+      </div>
+      <div id="supplier-orders-container">
+    <div id="supplier-orders">
+      <h3>Twoje dostawy</h3>
+      <table class="table-awaiting-orders">
+        <tr>
+            <th>ID</th>
+            <th>Twój status</th>
+            <th>Status restauracji</th>
+            <th>Adres dostawy</th>
+            <th>Data zamówienia</th>
+        </tr>
+        {% for order in accepted_orders %}
+        <tr>
+            <td><a href="./order/{{ order.id }}">{{ order.id }}</a></td>
+            <td>{{ order.get_supplier_acceptance_display}}</td>
+            <td>{{ order.get_restaurant_acceptance_display}}</td>
+            <td>{{ order.delivery_address }}</td>
+            <td>{{ order.created_on|date:'d-m-Y H:i:s' }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    </div>
+      </div>
+  {% endblock %}
+  <script src="js/scripts.js"></script>
+</body>
+</html>

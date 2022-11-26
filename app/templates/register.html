@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %} 
+
+<div class="container">
+    <div class="row-register">
+        <div class="col-md-6">
+            <div class="card">
+              <form method="post" class="box">
+                <h1>Tworzenie konta</h1>
+                    <h5>Podaj swoje dane</h5>
+                    {% csrf_token %}
+                    {% for field in form %}
+                      <p>
+                        {{ field }}
+                      </p>
+                    {% endfor %}
+                    {% for error in form.errors %}
+                          <p style="color: #000000; font-weight: bold">{{ error }}</p>
+                        {% endfor %}
+                  <a class="reg-log-button"><button type="submit">Zarejestruj się</button></a>
+              </form>
+            </div>
+        </div>
+    </div>
+  </div>
+
+{% endblock %}

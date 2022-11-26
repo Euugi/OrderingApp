@@ -1,0 +1,102 @@
+{% extends 'dashboard.html' %}
+
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The HTML5 Herald</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+  <link rel="stylesheet" href="css/styles.css?v=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+  {% block content %}
+      <div id="dashboard-restaurants-container">
+        <div id="dashboard-restaurants">
+            <h3>Twoje restauracje</h3>
+            <h6>Określ czy Twoja restauracja jest w stanie zrealizować dane zamówienie</h6>
+            <table class="table-restaurants">
+                <tr>
+                    <th>Nazwa</th>
+                    <th style="width:200px;">Rodzaj kuchni</th>
+                    <th>Adres</th>
+                </tr>
+                {% for restaurant in restaurants %}
+                <tr>
+                    <td><a href="./restaurant/{{ restaurant.slug }}">{{ restaurant.name }}</a></td>
+                    <td>{{ restaurant.get_category_display }}</td>
+                    <td>{{ restaurant.address_street }}, {{ restaurant.address_city }}, {{ restaurant.address_postalcode}},</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <a class="reg-log-button" href="./add-restaurant/"><button>Dodaj restaurację</button></a>
+      </div>
+      <div id="dashboard-awaiting-orders-container">
+        <div id="dashboard-awaiting-orders">
+            <h3>Zamówienia oczekujące na zatwierdzenie</h3>
+            <h6>Określ czy Twoja restauracja jest w stanie zrealizować dane zamówienie</h6>
+            <table class="table-awaiting-orders">
+                <tr>
+                    <th>ID</th>
+                    <th>Status restauracji</th>
+                    <th>Status ogólny</th>
+                    <th>Restauracja</th>
+                    <th>Data zamówienia</th>
+                    <th>Zamawiający</th>
+                    <th>Kwota</th>
+                </tr>
+                {% for order in orders|dictsort:"order_status" %}
+                {% if order.order_status == 'awaiting' %}
+                <tr>
+                    <td><a href="./order/{{ order.id }}">{{ order.id }}</a></td>
+                    <td>{{ order.get_restaurant_acceptance_display}}</td>
+                    {% if order.order_status == 'awaiting' and order.restaurant_acceptance == 'accepted'%}
+                    <td>Oczekujące na dostawcę</td>
+                    {% else %}
+                    <td>Oczekujące na zatwierdzenie</td>
+                    {% endif %}
+                    <td>{{ order.restaurant.name}}</td>
+                    <td>{{ order.created_on|date:'d-m-Y H:i:s' }}</td>
+                    <td>{{ order.ordered_user.first_name }} {{ order.ordered_user.last_name }}</td>
+                    <td>{{ order.price }}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+      </div>
+
+     <div id="dashboard-orders-container">
+        <div id="dashboard-orders">
+            <h3>Zamówienia</h3>
+            <table class="table-dashboard-orders">
+                <tr>
+                    <th>ID</th>
+                    <th>Status</th>
+                    <th>Restauracja</th>
+                    <th>Data zamówienia</th>
+                    <th>Zamawiający</th>
+                    <th>Kwota</th>
+                </tr>
+                {% for order in orders %}
+                <tr>
+                    <td><a href="./order/{{ order.id }}">{{ order.id }}</a></td>
+                    <td>{{ order.get_order_status_display}}</td>
+                    <td>{{ order.restaurant.name}}</td>
+                    <td>{{ order.created_on|date:'d-m-Y H:i:s' }}</td>
+                    <td>{{ order.ordered_user.first_name }} {{ order.ordered_user.last_name }}</td>
+                    <td>{{ order.price }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+     </div>
+    {% endblock %}
+  <script src="js/scripts.js"></script>
+</body>
+</html>

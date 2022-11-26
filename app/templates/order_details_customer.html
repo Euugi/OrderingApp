@@ -1,0 +1,228 @@
+{% load static %}
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The HTML5 Herald</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div id="dashboard-header">
+        <h1>Witaj, {{ user_name }}! Twoja rola w systemie to {{ user.get_user_role_display }}.</h1>
+        <a class="reg-log-button" href="http://127.0.0.1:8000/logout/"><button>Wyloguj się</button></a>
+    </div>
+<div id = "main-content">
+  <h2>Zamówienie numer {{ order.id }}</h2>
+    <div class="details">
+  <h4>Adres dostawy: {{ order.delivery_address }}</h4>
+  <h4>Data i godzina zamówienia {{ order.created_on|date:'d-m-Y H:i:s' }}</h4>
+  <h4>Kwota zamówienia {{ order.price }}</h4>
+    </div>
+<div id="awaiting-orders-container">
+  <h4 style="text-align: center; padding-top: 10px;">Twoje zamówienie</h4>
+  <table class="table-awaiting-orders">
+    <tr>
+        <th>Nazwa dania</th>
+        <th>Cena</th>
+    </tr>
+    {% for dish in dishes %}
+    <tr>
+        <td>{{ dish.name }}</td>
+        <td>{{ dish.price }}</td>
+    </tr>
+    {% endfor %}
+</table>
+</div>
+<div id="order-details">
+{% if order.order_status == 'finished' %}
+<h5>Zamówienie zostało zakończone</h5>
+         </br>
+{% else %}
+  <h5>Status restauracji: {{ order.get_restaurant_acceptance_display }}</h5>
+  <h5>Status dostawcy {{ order.get_supplier_acceptance_display }}</h5>
+         </br>
+  {% endif %}
+  {% if order.restaurant_acceptance == 'accepted' and order.supplier_acceptance == 'accepted' and order.order_status != 'finished' %}
+  <h4>Zamówienie zostało zaakceptowane przez restaurację i dostawcę, trwa jego realizacja</h4>
+      </br>
+  <h5>W razie potrzeby kontatku z restauracją lub dostawcą, wyślij wiadomość.</h5>
+  <form method="POST">
+    {% csrf_token %}
+      </br>
+    <a class="reg-log-button"><button>Potwierdź otrzymanie zamówienia</button></a>
+  </form>
+  {% elif order.order_status == 'finished' and is_reviewed == True %}
+  <h4>Dziękujemy za potwierdzenie otrzymania zamówienia i wystawienie opinii. Życzymy smacznego!</h4>
+  <a class="reg-log-button" href='./review'><button>Twoja opinia</button></a>
+      </br>
+  {% elif order.order_status == 'finished' %}
+  <h4>Dziękujemy za potwierdzenie otrzymania zamówienia. Życzymy smacznego!</h4>
+  <a class="reg-log-button" href='./review'><button>Wystaw opinię</button></a>
+  {% else %}
+    <h4>Dziękujemy za złożenie zamówienia</h4>
+    <h4>Realizacja zamówienia rozpocznie się gdy restauracja i dostawca je zatwierdzą</h4>
+  {% endif %}
+<a class="reg-log-button" href="/dashboard/"><button>Powrót</button></a>
+</div>
+  {% if order.restaurant_acceptance != 'accepted' %}
+      <div id="chat-container">
+        <div id="chat-output"><h2 style="text-align: center">Czat będzie dostępny po zatwierdzeniu zamówienia przez restaurację</h2></div>
+    </div>
+    {% else %}
+<script>
+            var div = document.getElementById("chat-container");
+            div.style.display = "none";
+        </script>
+<div id="chat-container">
+            <div id="chat-output"></div>
+            {% if is_reviewed != True %}
+              <input id="chat-input" type="text" size="50"><br>
+              <input id="chat-submit" type="button" value="Wyślij">
+            {% endif %}
+        </div>
+</div>
+{% endif %}
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+  <script>
+    var url = 'ws://' + window.location.host + '/ws/dashboard/order/' + "{{ order.id }}" + '/';
+    var chatSocket = new WebSocket(url);
+    var $chat = $('#chat-output');
+    var dateOptions = { day: 'numeric', month: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour24: true};
+
+    let system_messages = [];
+    "{% for mess in messages %}"
+        var x = "{{ mess }}".split(' ');
+        if ( x[0] === 'SYSTEM' ) {
+            let msg = "{{ mess }}";
+            system_messages.push(msg);
+        } 
+        joined_message = '';
+          for (let i = 3; i < x.length; i++) {
+            joined_message = joined_message + ' ' + x[i];
+        }
+        if(x[0]=="{{ user.username }}"){
+            date = Date.parse(x[2]);
+            var datetime = moment(date).format("DD-MM-YYYY HH:mm:ss")
+            $chat.append('<div class="message-me">' +
+                 '<div class="message-me-content">' +
+                 '<strong>' + "Ja" + '</strong> ' +
+                 '<span class="date">' + datetime + '</span><br>' +
+                 '<p class="message">' + joined_message + '</p>' +
+                 '</div>' +
+                 '</div>');
+        }
+        else {
+            let nickname = '';
+            if (x[0] == "{{ supplier_name }}") {
+              nickname = 'Dostawca';
+            }
+            else if (x[0] == "{{ restaurant_owner_name }}") {
+              nickname = 'Restaurator';
+            }
+            else if (x[0] == 'SYSTEM') {
+              nickname = 'SYSTEM';
+            }
+            date = Date.parse(x[2]);
+            var datetime = moment(date).format("DD-MM-YYYY HH:mm:ss")
+            if (x[0] == 'SYSTEM') {
+              datetime = '';
+            }
+  
+            $chat.append('<div class="message-other">' +
+                 '<div class="message-other-content">' +
+                 '<strong>' + nickname + '</strong> ' +
+                 '<span class="date">' + datetime + '</span><br>' +
+                 '<p class="message">' + joined_message + '</p>' +
+                 '</div>' +
+                 '</div>');
+        }
+        $chat.scrollTop($chat[0].scrollHeight);
+    "{% endfor %}"
+
+    let customer_confirmation_msg = false;
+    chatSocket.addEventListener('open', function (event) {
+      if (chatSocket.readyState === WebSocket.OPEN) {
+        if (system_messages.length > 0) {
+          for (index = 0; index < system_messages.length; index++) {
+              if (system_messages[index].includes("Odbiór zamówienia został potwierdzony przez klienta")) {
+                customer_confirmation_msg = true;
+                break;
+            }
+          }
+          let customer_confirmed = '{{ order.order_status }}';
+          if (customer_confirmation_msg == false && customer_confirmed == 'finished') {
+            var dateOptions = { day: 'numeric', month: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true};
+            var datetime = moment().format("DD-MM-YYYY HH:mm:ss")
+            var name = 'SYSTEM';
+            var message = 'SYSTEM@@@Odbiór zamówienia został potwierdzony przez klienta o godzinie: ' + datetime.substring(10);
+            chatSocket.send(JSON.stringify({'message': message}));
+            location.reload();
+          }
+        }
+        else {
+            var dateOptions = { day: 'numeric', month: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true};
+            var datetime = "{{ order.created_on|date:'d-m-Y H:i:s' }}";
+            var name = 'SYSTEM';
+            var message = 'SYSTEM@@@Zamówienie zostało złożone o godzinie: ' + datetime.substring(10);
+            chatSocket.send(JSON.stringify({'message': message}));
+            location.reload();
+        }    
+    }
+    });
+
+    chatSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        var message = data.message;
+        var dateOptions = { day: 'numeric', month: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true};
+        //var datetime = new Date(data.datetime).toLocaleString('en', dateOptions);
+        var datetime = moment(data.datetime).format("DD-MM-YYYY HH:mm:ss")
+        var isMe = data.user === '{{ request.user }}';
+        var source = isMe ? 'me' : 'other';
+        var name = isMe ? 'Ja' : data.user;
+        if (data.user == 'SYSTEM') {
+          name = 'SYSTEM';
+          datetime = '';
+        }
+
+        $chat.append('<div class="message-' + source + '">' +
+                 '<div class="message-' + source + '-content">' + 
+                 '<strong>' + name + '</strong> ' +
+                 '<span class="date">' + datetime + '</span><br>' +
+                 '<p class="message">' + message + '</p>' +
+                 '</div>' +
+                 '</div>');
+        $chat.scrollTop($chat[0].scrollHeight);
+      };
+
+    chatSocket.onclose = function(e) {
+    console.error('Chat socket closed unexpectedly');
+    };
+
+    var $input = $('#chat-input');
+    var $submit = $('#chat-submit');
+
+    $submit.click(function() {
+        var message = $input.val();
+        if(message) {
+          chatSocket.send(JSON.stringify({'message': message}));
+          $input.val('');
+          $input.focus();
+        }
+    });
+
+    $input.focus();
+    $input.keyup(function(e) {
+    if (e.which === 13) {
+      $submit.click();
+    }
+  });
+</script>
+
+</body>
+</html>

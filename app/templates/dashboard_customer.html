@@ -1,0 +1,85 @@
+{% extends 'dashboard.html' %}
+
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The HTML5 Herald</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+  {% load static %}
+  <script src="{% static 'app.js' %}"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+  {% block content %}
+      <div id="customer-orders-container">
+      <div id="customer">
+        <p>Czy chcesz zamówić jedzenie?</p>
+        <a class="reg-log-button" href="./restaurants/"><button>Zamów jedzenie</button></a>
+        </div>
+        <div id="customer-orders">
+            <h3>Zamówienia</h3>
+            <table class="table-orders">
+                <tr>
+                    <th>ID</th>
+                    <th>Status</th>
+                    <th>Data zamówienia</th>
+                    <th>Restauracja</th>
+                    <th>Kwota</th>
+                </tr>
+                {% for order in orders.all|dictsort:"order_status" %}
+                <tr>
+                    <td><a href="./order/{{ order.id }}">{{ order.id }}</a></td>
+                    <td>{{ order.get_order_status_display}}</td>
+                    <td>{{ order.created_on|date:'d-m-Y H:i:s' }}</td>
+                    <td>{{ order.restaurant.name }}</td>
+                    <td>{{ order.price }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div id="close-orders">
+            <h3>Zakończone zamówienia</h3>
+            <table class="table-orders">
+                <tr>
+                    <th>ID</th>
+                    <th>Status</th>
+                    <th>Data zamówienia</th>
+                    <th>Restauracja</th>
+                    <th>Kwota</th>
+                </tr>
+                {% for order in orders %}
+                {% if order.order_status == 'finished' %}
+                <tr>
+                    <td><a href="./order/{{ order.id }}">{{ order.id }}</a></td>
+                    <td>{{ order.get_order_status_display}}</td>
+                    <td>{{ order.created_on|date:'d-m-Y H:i:s' }}</td>
+                    <td>{{ order.restaurant.name }}</td>
+                    <td>{{ order.price }}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+      </div>
+  {% endblock %}
+  <script>
+    document.querySelector('#room-name-input').focus();
+    document.querySelector('#room-name-input').onkeyup = function(e) {
+        if (e.keyCode === 13) {  // enter, return
+            document.querySelector('#room-name-submit').click();
+        }
+    };
+
+    document.querySelector('#room-name-submit').onclick = function(e) {
+        var roomName = document.querySelector('#room-name-input').value;
+        window.location.pathname = '/dashboard/order/' + roomName + '/';
+    };
+</script>
+<script src="js/app.js"></script>
+</body>
+</html>

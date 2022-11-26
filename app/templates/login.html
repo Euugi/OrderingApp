@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <div class="row-login">
+        <div class="col-md-6">
+            <div class="card">
+              <form method="post" class="box">
+                <h1>Logowanie</h1>
+                    <h5>Podaj swoje dane</h5>
+                {% csrf_token %}
+                {% for field in form %}
+                  <p>
+                    {{ field }}
+                    {% if field.help_text %}
+                      <small style="color: grey">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                      <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                  </p>
+                {% endfor %}
+                  <a class="reg-log-button"><button type="submit">Zaloguj się</button></a>
+              </form>
+            </div>
+        </div>
+    </div>
+  </div>
+  
+{% endblock %}

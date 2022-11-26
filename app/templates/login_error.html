@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="login-error">
+                <p>Podany login nie istnieje lub hasło jest nieprawidłowe</p>
+                <a class="reg-log-button" href="/login/"><button>Powrót</button></a>
+            </div>
+        </div>
+    </div>
+  </div>
+  
+{% endblock %}

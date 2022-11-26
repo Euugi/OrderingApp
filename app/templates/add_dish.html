@@ -1,0 +1,43 @@
+{% extends 'dashboard_restaurant.html' %}
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The HTML5 Herald</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+  <link rel="stylesheet" href="css/styles.css?v=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+  {% block content %}
+    <div id="add-dish-container">
+      <div>
+      {% for restaurant in restaurants %}
+        <span>{{ restaurant.name }} {{ restaurant.address_city }}</span>
+      {% endfor %}
+      </div>
+      <div id="add-dish-form">
+        <form method="post" class="box">
+              <h3>Dodaj danie</h3>
+              </br> 
+              {% csrf_token %}
+              {% for field in form %}
+                <p>
+                  {{ field }}
+                  {% for error in field.errors %}
+                    <p style="color: red">{{ error }}</p>
+                  {% endfor %}
+                </p>
+              {% endfor %}
+          <a class="reg-log-button"><button type="submit">Zapisz</button></a>
+        </form>
+      </div>
+    </div>
+  {% endblock %}
+  <script src="js/scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>SmartEats</title>
+  <meta name="description" content="SmartEats">
+  <meta name="author" content="SitePoint">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<div id="menu">
+    <a class="menu-button" href="http://127.0.0.1:8000/#"><button>Home</button></a>
+    <a class="menu-button" href="http://127.0.0.1:8000/#"><button>O nas</button></a>
+    <a class="menu-button" href="http://127.0.0.1:8000/#"><button>Kontakt</button></a>
+    <a class="menu-button" href="http://127.0.0.1:8000/#"><button>FAQ</button></a>
+</div>
+<div id="left">
+    <p>Najlepsze miejsce do zamawiania jedzenia w kosmosie!</p>
+</div>
+<div id="right">
+        <div id="reg-log">
+            <p id="login-question">Masz już konto?</p>
+            <p id="register-question">Czy chcesz się zarejestrować?</p>
+            <p style="clear: both"></p>
+        <a class="reg-log-button" href="http://127.0.0.1:8000/login"><button>Zaloguj się</button></a>
+        <a class="reg-log-button" href="http://127.0.0.1:8000/register"><button>Zarejestruj się</button></a>
+    </div>
+</div>
+  <script src="js/scripts.js"></script>
+</body>
+</html>
